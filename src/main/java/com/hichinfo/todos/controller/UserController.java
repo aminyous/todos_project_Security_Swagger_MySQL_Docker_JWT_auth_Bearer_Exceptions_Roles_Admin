@@ -1,6 +1,7 @@
 package com.hichinfo.todos.controller;
 
 import com.hichinfo.todos.entity.User;
+import com.hichinfo.todos.response.UserResponse;
 import com.hichinfo.todos.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public User getUserInfo() throws AccessDeniedException {
+    public UserResponse getUserInfo() throws AccessDeniedException {
         return userService.getUserInfo();
     }
 }

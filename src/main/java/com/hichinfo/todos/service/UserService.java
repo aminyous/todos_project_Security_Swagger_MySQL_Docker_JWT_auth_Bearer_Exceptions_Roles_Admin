@@ -1,9 +1,9 @@
 package com.hichinfo.todos.service;
 
-import com.hichinfo.todos.entity.User;
+import com.hichinfo.todos.response.UserResponse;
 
 import java.nio.file.AccessDeniedException;
 
 public interface UserService {
-    User getUserInfo() throws AccessDeniedException;
+    UserResponse getUserInfo() throws AccessDeniedException;
 }
