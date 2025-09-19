@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.nio.file.AccessDeniedException;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -48,7 +47,7 @@ public class UserServiceImpl implements UserService {
         User user = (User) authentication.getPrincipal();
 
         if(isLastAdmin(user)){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin cannot delete itself");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin cannot delete itself if he is the lst Admin");
         }
         userRepository.delete(user);
     }
