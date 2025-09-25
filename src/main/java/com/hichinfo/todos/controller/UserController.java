@@ -1,13 +1,12 @@
 package com.hichinfo.todos.controller;
 
 import com.hichinfo.todos.entity.User;
+import com.hichinfo.todos.request.PasswordUpdateRequest;
 import com.hichinfo.todos.response.UserResponse;
 import com.hichinfo.todos.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
 
@@ -30,5 +29,11 @@ public class UserController {
     @DeleteMapping
     public void deleteUser() throws AccessDeniedException {
         userService.deleteUser();
+    }
+
+    @PutMapping("/password")
+    public void passwordUpdate(@Valid @RequestBody PasswordUpdateRequest passwordUpdateRequest) throws AccessDeniedException {
+        userService.updatePassword(passwordUpdateRequest);
+
     }
 }
