@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.AccessDeniedException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TodoServiceImpl implements TodoService{
@@ -37,12 +39,28 @@ public class TodoServiceImpl implements TodoService{
 
         Todo savedTodo = todoRepository.save(todo);
 
+        return convertToTodoResponse(savedTodo);
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TodoResponse> getAllTodos() throws AccessDeniedException {
+        User currentUser = findAuthenticatedUser.getAuthenticatedUser();
+
+        return todoRepository.findByOwner(currentUser)
+                .stream()
+                .map(this::convertToTodoResponse)
+                .toList();
+    }
+
+    private TodoResponse convertToTodoResponse(Todo todo){
         return new TodoResponse(
-                savedTodo.getId(),
-                savedTodo.getTitle(),
-                savedTodo.getDescription(),
-                savedTodo.getPriority(),
-                savedTodo.isComplete()
+                todo.getId(),
+                todo.getTitle(),
+                todo.getDescription(),
+                todo.getPriority(),
+                todo.isComplete()
         );
     }
 }
